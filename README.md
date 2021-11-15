@@ -1,2 +1,2 @@
 # repo_control
-A single repo control tool to simplify the git commands
+A tool to manage a single git repo to simplify the git commands.
