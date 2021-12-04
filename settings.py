@@ -1,6 +1,8 @@
 """
 Authors: guanchenglichina@qq.com (Guancheng Li)
 Settings for the repo control tool.
+
+Currently not used, considering remove it.
 """
 import logging
 import os
@@ -24,13 +26,13 @@ PATHS = [
 ]
 
 
-def _setings_initialization():
+def _setings_initialization() -> None:
     for item in PATHS:
         os.makedirs(item, exist_ok=True)
     logging.info('Settings has been initialized.')
 
 
-def _clean_up(include_user_path=False):
+def _clean_up(include_user_path=False) -> None:
     if os.path.isdir(TEMP_PATH):
         shutil.rmtree(TEMP_PATH)
     if include_user_path and os.path.isdir(BASE_PATH):
@@ -44,7 +46,7 @@ def _check_settings() -> bool:
     return True
 
 
-def settings_setup(simple_mode=False, clean_up=False):
+def settings_setup(simple_mode=False, clean_up=False) -> None:
     flag_file = os.path.join(BASE_PATH, 'settings_setup.Done')
     execute = False
     if simple_mode and os.path.isfile(flag_file):

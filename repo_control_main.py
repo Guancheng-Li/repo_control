@@ -2,11 +2,14 @@
 """
 Authors: guanchenglichina@qq.com (Guancheng Li)
 An repo control tool for simplify the git command.
+
+ONLY the simplest function statements,
+DO NOT implement functions in this file,
+WON'T obey code style in other files considering the click decorator and arg process.
 """
 
 import click
 import logging
-import os
 
 import git_command_impl
 
@@ -20,9 +23,12 @@ def setup_logging(logging_level):
     log.addHandler(handler)
     log.setLevel(logging_level)
 
+
+########## Statements ##########
 @click.group()
 def main():
     setup_logging(logging.INFO)
+
 
 @main.command()
 def version():
@@ -92,9 +98,7 @@ def drop():
 @main.command()
 @click.option('--author', type=str, default='', help='Commit author.')
 def list_commit(author):
-    filters = {
-        'author': author
-    }
+    filters = {'author': author}
     git_command_impl.run_list_commit(filters)
 
 
