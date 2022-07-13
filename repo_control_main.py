@@ -32,7 +32,7 @@ def main():
 
 @main.command()
 def version():
-    click.echo('1.0.0')
+    click.echo('1.0.1')
 
 
 @main.command()
@@ -41,7 +41,6 @@ def version():
 def start(branch_name, base_branch):
     # TODO(Guancheng): Add flag for no username.
     git_command_impl.run_start(branch_name, base_branch)
-    git_command_impl.run_submodule_update()
 
 
 @main.command()
@@ -49,7 +48,6 @@ def start(branch_name, base_branch):
 def checkout(branch_name):
     # TODO(Guancheng): Add flag for no username.
     git_command_impl.run_checkout(branch_name)
-    git_command_impl.run_submodule_update()
 
 
 @main.command()
@@ -77,7 +75,16 @@ def branch():
 @main.command()
 def sync():
     git_command_impl.run_sync()
-    git_command_impl.run_submodule_update()
+
+
+@main.command()
+def fetch():
+    git_command_impl.run_fetch()
+
+
+@main.command()
+def rebase():
+    git_command_impl.run_rebase()
 
 
 @main.command()

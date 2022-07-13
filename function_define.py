@@ -6,6 +6,8 @@ from typing import List
 
 from utils.process_utils import run_child_process
 
+import settings
+
 def _normalize_branch_name(branch_name: str, prefix: str) -> str:
     """Add prefix if needed."""
     # TODO(Guancheng): add ut after add Bazel
@@ -26,6 +28,8 @@ def _normalize_user_branch(branch_name: str) -> str:
     """Normalize on demand."""
     if branch_name in ['master', 'main']:
         return branch_name
+    if branch_name == settings.REMOTE_MAIN_STREAM:
+        return branch_name
     return _normalize_branch_name(branch_name, get_whoami())
 
 
@@ -39,7 +43,9 @@ def get_start_branch(args: List[str]) -> List[str]:
     args = args[:2] if len(args) > 2 else args
     res = ['checkout', '-b']
     res.append(_normalize_user_branch(args[0]))
-    res.append(_normalize_user_branch(args[1]) if len(args) > 1 else 'origin/master')
+    res.append(
+        _normalize_user_branch(args[1]) if len(args) > 1 \
+            else f'origin/{settings.REMOTE_MAIN_STREAM}')
     return res
 
 
@@ -85,10 +91,14 @@ def get_reset(commit_sha: str) -> List[str]:
     return ['reset', '--hard', commit_sha]
 
 
-def get_sync() -> List[str]:
+def get_fetch() -> List[str]:
+    """Tokens to fetch remote commits."""
+    return ['fetch']
+
+
+def get_rebase() -> List[str]:
     """Tokens to rebase to local master."""
-    # TODO(Guancheng): Maybe change into 'git pull origin master'
-    return ['rebase', 'origin/master']
+    return ['rebase', f'origin/{settings.REMOTE_MAIN_STREAM}']
 
 
 def get_current_branch_name() -> List[str]:
@@ -116,7 +126,7 @@ def get_conflict_file() -> List[str]:
 
 def get_merge_base() -> List[str]:
     """Tokens to get the merge rebase."""
-    return ['merge-base', 'HEAD', 'origin/master']
+    return ['merge-base', 'HEAD', f'origin/{settings.REMOTE_MAIN_STREAM}']
 
 
 def get_diff(commit_sha: str) -> List[str]:

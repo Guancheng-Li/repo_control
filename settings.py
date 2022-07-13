@@ -25,6 +25,9 @@ PATHS = [
     LOGGING_PATH,
 ]
 
+# Repo
+REMOTE_MAIN_STREAM = 'main'
+
 
 def _setings_initialization() -> None:
     for item in PATHS:

@@ -100,9 +100,20 @@ def run_drop() -> None:
     run_git_commands_and_print(function_define.get_reset('HEAD^'))
 
 
+def run_fetch() -> None:
+    """Fetch the remote master head."""
+    run_git_commands_and_print(function_define.get_fetch())
+
+
+def run_rebase() -> None:
+    """Rebase to local fetched master head."""
+    run_git_commands_and_print(function_define.get_rebase())
+
+
 def run_sync() -> None:
-    """Rebase to local master."""
-    run_git_commands_and_print(function_define.get_sync())
+    """Fetch and rebase."""
+    run_git_commands_and_print(function_define.get_fetch())
+    run_git_commands_and_print(function_define.get_rebase())
 
 
 def run_publish() -> None:
