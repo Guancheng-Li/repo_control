@@ -121,6 +121,11 @@ def diff():
 
 
 @main.command()
+def amend():
+    git_command_impl.run_amend()
+
+
+@main.command()
 def test():
     git_command_impl.run_test()
 

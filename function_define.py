@@ -79,10 +79,23 @@ def get_stage() -> List[str]:
     return ['stage', '-A']
 
 
-def get_commit(commit_info: str) -> List[str]:
+def get_commit(args: List[str]) -> List[str]:
     """Tokens to commit changes."""
-    assert commit_info, 'Must provide message info!'
-    return ['commit', '-m', '\'{}\''.format(commit_info)]
+    assert args, 'Must provide args!'
+    return ['commit'] + args
+
+
+def get_commit_message(message: str) -> List[str]:
+    """Tokens to commit changes with message."""
+    return get_commit(['-m', f'"{message}"'])
+
+
+def get_commit_amend(no_edit: bool) -> List[str]:
+    """Tokens to commit changes with message."""
+    args = ['--amend']
+    if no_edit:
+        args += ['--no-edit']
+    return get_commit(args)
 
 
 def get_reset(commit_sha: str) -> List[str]:

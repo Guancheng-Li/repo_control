@@ -96,7 +96,7 @@ def run_branch() -> None:
 def run_drop() -> None:
     """Drop the local changes, dangerous."""
     run_git_commands_and_print(function_define.get_stage())
-    run_git_commands_and_print(function_define.get_commit('commit_to_drop'))
+    run_git_commands_and_print(function_define.get_commit_message('commit_to_drop'))
     run_git_commands_and_print(function_define.get_reset('HEAD^'))
 
 
@@ -148,7 +148,15 @@ def run_diff() -> None:
     if merge_base_commit:
         run_git_commands_and_print(function_define.get_diff(merge_base_commit), True)
     else:
-        print('Cannot obain the merge base commit sha.')
+        print('Cannot obtain the merge base commit sha.')
+
+def run_amend() -> None:
+    """Stage untracked files and amend to the last commit,
+       temporarily cannot cannot obtain last commit id,
+       won't check if it merged.
+    """
+    run_stage()
+    run_git_commands_and_print(function_define.get_commit_amend(no_edit=True))
 
 
 def run_test() -> None:
