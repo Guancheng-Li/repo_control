@@ -1,0 +1,14 @@
+
+# repo completion                                       -*- shell-script -*-
+_repo()
+{   
+    local cur prev words cword
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts="abandon branch checkout conflict diff drop list-commit publish stage start status submodule-update sync test version init help"
+    COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+    return 0
+} 
+complete -F _repo repo
+# ex: filetype=sh
